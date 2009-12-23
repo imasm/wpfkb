@@ -1,0 +1,44 @@
+﻿<Window
+    x:Class="WpfKb.TestClient.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:WpfKb="clr-namespace:WpfKb.Controls;assembly=WpfKb"
+    Title="WpfKb Test Client"
+    WindowState="Maximized"
+    x:Name="TestWindow"
+    >
+    <Window.Background>
+        <ImageBrush ImageSource="{DynamicResource Background.Default}" />
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Border Style="{DynamicResource Border.Rounded.Floating}">
+            <StackPanel>
+                <TextBox
+                    Grid.Row="0"
+                    x:Name="TextBox1"
+                    Style="{DynamicResource TextBox.Rounded}"
+                    />
+                <TextBox
+                    Grid.Row="1"
+                    x:Name="TextBox2"
+                    Style="{DynamicResource TextBox.Rounded}"
+                    />
+            </StackPanel>
+        </Border>
+
+        <WpfKb:FloatingTouchScreenKeyboard
+            x:Name="Keyboard"
+            IsOpen="True"
+            Width="900"
+            Height="400"
+            PlacementTarget="{Binding ElementName=TestWindow}"
+            Placement="Center"
+            AreAnimationsEnabled="True"
+            />
+    </Grid>
+</Window>
