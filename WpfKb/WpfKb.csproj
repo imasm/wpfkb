@@ -23,7 +23,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\WpfKb.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,7 +34,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\WpfKb.xml</DocumentationFile>
+    <DocumentationFile>
+    </DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="InputSimulator, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -71,6 +75,7 @@
     <Compile Include="Controls\FloatingTouchScreenKeyboard.xaml.cs">
       <DependentUpon>FloatingTouchScreenKeyboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\OnScreenKeyEventArgs.cs" />
     <Compile Include="LogicalKeys\CaseSensitiveKey.cs" />
     <Compile Include="LogicalKeys\ChordKey.cs" />
     <Compile Include="LogicalKeys\ILogicalKey.cs" />
@@ -117,6 +122,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NewControls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

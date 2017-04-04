@@ -9,26 +9,25 @@ using WpfKb.LogicalKeys;
 
 namespace WpfKb.Controls
 {
-    public class OnScreenKeyEventArgs : RoutedEventArgs
+    [TemplatePart(Name = ElementSurface, Type = typeof(Border))]
+    [TemplatePart(Name = ElementMouseDownSurface, Type = typeof(Border))]
+    [TemplatePart(Name = ElementKeyText, Type = typeof(TextBlock))]
+    public class OnScreenKey : Control
     {
-        public OnScreenKey OnScreenKey { get; private set; }
-
-        public OnScreenKeyEventArgs(RoutedEvent routedEvent, OnScreenKey onScreenKey)
-            : base(routedEvent)
-        {
-            OnScreenKey = onScreenKey;
-        }
-    }
-
-    public delegate void OnScreenKeyEventHandler(DependencyObject sender, OnScreenKeyEventArgs e);
-
-    public class OnScreenKey : Border
-    {
+        private const string ElementSurface = "PART_Surface";
+        private const string ElementMouseDownSurface = "PART_MouseDownSurface";
+        private const string ElementKeyText = "PART_KeyText";
+        
         public static readonly DependencyProperty KeyProperty = DependencyProperty.Register("Key", typeof(ILogicalKey), typeof(OnScreenKey), new UIPropertyMetadata(null, OnKeyChanged));
+
         public static readonly DependencyProperty AreAnimationsEnabledProperty = DependencyProperty.Register("AreAnimationsEnabled", typeof(bool), typeof(OnScreenKey), new UIPropertyMetadata(true));
         public static readonly DependencyProperty IsMouseOverAnimationEnabledProperty = DependencyProperty.Register("IsMouseOverAnimationEnabled", typeof(bool), typeof(OnScreenKey), new UIPropertyMetadata(false));
         public static readonly DependencyProperty IsOnScreenKeyDownProperty = DependencyProperty.Register("IsOnScreenKeyDown", typeof(bool), typeof(OnScreenKey), new UIPropertyMetadata(false));
         public static readonly DependencyProperty GridWidthProperty = DependencyProperty.Register("GridWidth", typeof(GridLength), typeof(OnScreenKey), new UIPropertyMetadata(new GridLength(1, GridUnitType.Star)));
+
+        public static readonly DependencyProperty TextBrushProperty = DependencyProperty.Register("TextBrush", typeof(Brush), typeof(OnScreenKey), new PropertyMetadata(default(Brush)));
+        public static readonly DependencyProperty OutsideBorderBrushProperty = DependencyProperty.Register("OutsideBorderBrush", typeof(Brush), typeof(OnScreenKey), new PropertyMetadata(default(Brush)));
+        public static readonly DependencyProperty OutsideBorderThicknessProperty = DependencyProperty.Register("OutsideBorderThickness", typeof(Thickness), typeof(OnScreenKey), new PropertyMetadata(default(Thickness)));
 
 
         public static readonly RoutedEvent PreviewOnScreenKeyDownEvent = EventManager.RegisterRoutedEvent("PreviewOnScreenKeyDown", RoutingStrategy.Direct, typeof(OnScreenKeyEventHandler), typeof(OnScreenKey));
@@ -41,46 +40,36 @@ namespace WpfKb.Controls
         private Border _keySurface;
         private Border _mouseDownSurface;
         private TextBlock _keyText;
-
-        private readonly GradientBrush _keySurfaceBrush = new LinearGradientBrush(
-            new GradientStopCollection
-                {
-                    new GradientStop(Color.FromRgb(56, 56, 56), 0),
-                    new GradientStop(Color.FromRgb(56, 56, 56), 0.6),
-                    new GradientStop(Color.FromRgb(26, 26, 26), 1)
-                }, 90);
-
-        private readonly GradientBrush _keySurfaceBorderBrush = new LinearGradientBrush(
-            new GradientStopCollection
-                {
-                    new GradientStop(Color.FromRgb(200, 200, 200), 0),
-                    new GradientStop(Color.FromRgb(56, 56, 56), 1)
-                }, 90);
-
-        private readonly GradientBrush _keySurfaceMouseOverBrush = new LinearGradientBrush(
-            new GradientStopCollection
-                {
-                    new GradientStop(Color.FromRgb(120, 120, 120), 0),
-                    new GradientStop(Color.FromRgb(120, 120, 120), 0.6),
-                    new GradientStop(Color.FromRgb(80, 80, 80), 1)
-                }, 90);
-
-        private readonly GradientBrush _keySurfaceMouseOverBorderBrush = new LinearGradientBrush(
-            new GradientStopCollection
-                {
-                    new GradientStop(Color.FromRgb(255, 255, 255), 0),
-                    new GradientStop(Color.FromRgb(100, 100, 100), 1),
-                }, 90);
-
-        private readonly SolidColorBrush _keyOutsideBorderBrush = new SolidColorBrush(Color.FromArgb(255, 26, 26, 26));
-
-
+        private Brush _keySurfaceBorderBrush;
+        private Brush _keySurfaceBackground;
 
         public ILogicalKey Key
         {
             get { return (ILogicalKey)GetValue(KeyProperty); }
             set { SetValue(KeyProperty, value); }
         }
+        
+        #region NewTemplateBindings
+        public Brush TextBrush
+        {
+            get { return (Brush)GetValue(TextBrushProperty); }
+            set { SetValue(TextBrushProperty, value); }
+        }
+
+        public Brush OutsideBorderBrush
+        {
+            get { return (Brush)GetValue(OutsideBorderBrushProperty); }
+            set { SetValue(OutsideBorderBrushProperty, value); }
+        }
+
+        public Thickness OutsideBorderThickness
+        {
+            get { return (Thickness)GetValue(OutsideBorderThicknessProperty); }
+            set { SetValue(OutsideBorderThicknessProperty, value); }
+        }
+        #endregion
+        
+
 
         public bool AreAnimationsEnabled
         {
@@ -117,9 +106,23 @@ namespace WpfKb.Controls
             get { return (GridLength)GetValue(GridWidthProperty); }
             set { SetValue(GridWidthProperty, value); }
         }
-        
 
-        
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            
+            _keySurface = Template.FindName(ElementSurface, this) as Border;
+            _mouseDownSurface = Template.FindName(ElementMouseDownSurface, this) as Border;
+            _keyText = Template.FindName(ElementKeyText, this) as TextBlock;
+
+            _keySurfaceBorderBrush = _keySurface?.BorderBrush;
+            _keySurfaceBackground = _keySurface?.Background;
+
+            _keyText?.SetBinding(TextBlock.TextProperty, new Binding("DisplayName") { Source = this.Key });
+        }
+
+
         protected static void OnKeyChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
             ((OnScreenKey)sender).SetupControl((ILogicalKey)e.NewValue);
@@ -192,45 +195,7 @@ namespace WpfKb.Controls
 
         private void SetupControl(ILogicalKey key)
         {
-            CornerRadius = new CornerRadius(3);
-            BorderBrush = _keyOutsideBorderBrush;
-            BorderThickness = new Thickness(1);
-            SnapsToDevicePixels = true;
-
-            var g = new Grid();
-            Child = g;
-
-            _keySurface = new Border
-                              {
-                                  CornerRadius = new CornerRadius(3),
-                                  BorderBrush = _keySurfaceBorderBrush,
-                                  BorderThickness = new Thickness(1),
-                                  Background = _keySurfaceBrush,
-                                  SnapsToDevicePixels = true
-                              };
-            g.Children.Add(_keySurface);
-
-            _mouseDownSurface = new Border
-                                    {
-                                        CornerRadius = new CornerRadius(3),
-                                        Background = Brushes.White,
-                                        Opacity = 0,
-                                        SnapsToDevicePixels = true
-                                    };
-            g.Children.Add(_mouseDownSurface);
-
-            _keyText = new TextBlock
-                           {
-                               Margin = new Thickness(3, 0, 0, 0),
-                               FontSize = 20,
-                               HorizontalAlignment = HorizontalAlignment.Left,
-                               VerticalAlignment = VerticalAlignment.Top,
-                               Foreground = Brushes.White,
-                               SnapsToDevicePixels = true
-                           };
-            _keyText.SetBinding(TextBlock.TextProperty, new Binding("DisplayName") { Source = key });
-            g.Children.Add(_keyText);
-
+            _keyText?.SetBinding(TextBlock.TextProperty, new Binding("DisplayName") {Source = key});
             key.PropertyChanged += Key_PropertyChanged;
             key.LogicalKeyPressed += Key_VirtualKeyPressed;
         }
@@ -294,7 +259,7 @@ namespace WpfKb.Controls
         private void AnimateMouseDown()
         {
             _mouseDownSurface.BeginAnimation(OpacityProperty, new DoubleAnimation(1, new Duration(TimeSpan.Zero)));
-            _keyText.Foreground = _keyOutsideBorderBrush;
+            _keyText.Foreground = OutsideBorderBrush;
         }
 
         private void AnimateMouseUp()
@@ -316,8 +281,8 @@ namespace WpfKb.Controls
         {
             if (IsMouseOverAnimationEnabled)
             {
-                _keySurface.Background = _keySurfaceMouseOverBrush;
-                _keySurface.BorderBrush = _keySurfaceMouseOverBorderBrush;
+                //_keySurface.Background = _keySurfaceMouseOverBrush;
+                //_keySurface.BorderBrush = _keySurfaceMouseOverBorderBrush;
             }
             base.OnMouseEnter(e);
         }
@@ -327,7 +292,7 @@ namespace WpfKb.Controls
             if (IsMouseOverAnimationEnabled)
             {
                 if (Key is TogglingModifierKey && ((ModifierKeyBase)Key).IsInEffect) return;
-                _keySurface.Background = _keySurfaceBrush;
+                _keySurface.Background = _keySurfaceBackground;
                 _keySurface.BorderBrush = _keySurfaceBorderBrush;
             }
             if (IsOnScreenKeyDown)
