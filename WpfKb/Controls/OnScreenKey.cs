@@ -28,7 +28,8 @@ namespace WpfKb.Controls
         public static readonly DependencyProperty TextBrushProperty = DependencyProperty.Register("TextBrush", typeof(Brush), typeof(OnScreenKey), new PropertyMetadata(default(Brush)));
         public static readonly DependencyProperty OutsideBorderBrushProperty = DependencyProperty.Register("OutsideBorderBrush", typeof(Brush), typeof(OnScreenKey), new PropertyMetadata(default(Brush)));
         public static readonly DependencyProperty OutsideBorderThicknessProperty = DependencyProperty.Register("OutsideBorderThickness", typeof(Thickness), typeof(OnScreenKey), new PropertyMetadata(default(Thickness)));
-
+        public static readonly DependencyProperty MouseOverBrushProperty = DependencyProperty.Register("MouseOverBrush", typeof(Brush), typeof(OnScreenKey), new PropertyMetadata(default(Brush)));
+        public static readonly DependencyProperty MouseOverBorderBrushProperty = DependencyProperty.Register("MouseOverBorderBrush", typeof(Brush), typeof(OnScreenKey), new PropertyMetadata(default(Brush)));
 
         public static readonly RoutedEvent PreviewOnScreenKeyDownEvent = EventManager.RegisterRoutedEvent("PreviewOnScreenKeyDown", RoutingStrategy.Direct, typeof(OnScreenKeyEventHandler), typeof(OnScreenKey));
         public static readonly RoutedEvent PreviewOnScreenKeyUpEvent = EventManager.RegisterRoutedEvent("PreviewOnScreenKeyUp", RoutingStrategy.Direct, typeof(OnScreenKeyEventHandler), typeof(OnScreenKey));
@@ -42,6 +43,16 @@ namespace WpfKb.Controls
         private TextBlock _keyText;
         private Brush _keySurfaceBorderBrush;
         private Brush _keySurfaceBackground;
+
+
+
+        private readonly GradientBrush _keySurfaceMouseOverBrush = new LinearGradientBrush(
+            new GradientStopCollection
+                {
+                    new GradientStop(Color.FromRgb(0x78, 0x78, 0x78), 0),
+                    new GradientStop(Color.FromRgb(0x78, 0x78, 0x78), 0.6),
+                    new GradientStop(Color.FromRgb(0x50, 0x50, 0x50), 1)
+                }, 90);
 
         public ILogicalKey Key
         {
@@ -67,8 +78,20 @@ namespace WpfKb.Controls
             get { return (Thickness)GetValue(OutsideBorderThicknessProperty); }
             set { SetValue(OutsideBorderThicknessProperty, value); }
         }
+
+        public Brush MouseOverBrush
+        {
+            get { return (Brush)GetValue(MouseOverBrushProperty); }
+            set { SetValue(MouseOverBrushProperty, value); }
+        }
+
+        public Brush MouseOverBorderBrush
+        {
+            get { return (Brush)GetValue(MouseOverBorderBrushProperty); }
+            set { SetValue(MouseOverBorderBrushProperty, value); }
+        }
         #endregion
-        
+
 
 
         public bool AreAnimationsEnabled
@@ -281,8 +304,11 @@ namespace WpfKb.Controls
         {
             if (IsMouseOverAnimationEnabled)
             {
-                //_keySurface.Background = _keySurfaceMouseOverBrush;
-                //_keySurface.BorderBrush = _keySurfaceMouseOverBorderBrush;
+                if (MouseOverBrush != null)
+                    _keySurface.Background = MouseOverBrush;
+
+                if (MouseOverBorderBrush != null)
+                    _keySurface.BorderBrush = MouseOverBorderBrush;
             }
             base.OnMouseEnter(e);
         }
@@ -292,6 +318,7 @@ namespace WpfKb.Controls
             if (IsMouseOverAnimationEnabled)
             {
                 if (Key is TogglingModifierKey && ((ModifierKeyBase)Key).IsInEffect) return;
+
                 _keySurface.Background = _keySurfaceBackground;
                 _keySurface.BorderBrush = _keySurfaceBorderBrush;
             }
