@@ -79,6 +79,7 @@
     <Compile Include="Input\VirtualKeyCode.cs" />
     <Compile Include="LogicalKeys\CaseSensitiveKey.cs" />
     <Compile Include="LogicalKeys\ChordKey.cs" />
+    <Compile Include="LogicalKeys\EmptyKey.cs" />
     <Compile Include="LogicalKeys\ILogicalKey.cs" />
     <Compile Include="LogicalKeys\InstantaneousModifierKey.cs" />
     <Compile Include="LogicalKeys\LogicalKeyBase.cs" />
