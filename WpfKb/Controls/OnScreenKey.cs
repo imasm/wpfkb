@@ -28,6 +28,7 @@ namespace WpfKb.Controls
         public static readonly DependencyProperty TextBrushProperty = DependencyProperty.Register("TextBrush", typeof(Brush), typeof(OnScreenKey), new PropertyMetadata(default(Brush)));
         public static readonly DependencyProperty OutsideBorderBrushProperty = DependencyProperty.Register("OutsideBorderBrush", typeof(Brush), typeof(OnScreenKey), new PropertyMetadata(default(Brush)));
         public static readonly DependencyProperty OutsideBorderThicknessProperty = DependencyProperty.Register("OutsideBorderThickness", typeof(Thickness), typeof(OnScreenKey), new PropertyMetadata(default(Thickness)));
+
         public static readonly DependencyProperty MouseOverBrushProperty = DependencyProperty.Register("MouseOverBrush", typeof(Brush), typeof(OnScreenKey), new PropertyMetadata(default(Brush)));
         public static readonly DependencyProperty MouseOverBorderBrushProperty = DependencyProperty.Register("MouseOverBorderBrush", typeof(Brush), typeof(OnScreenKey), new PropertyMetadata(default(Brush)));
 
@@ -43,7 +44,7 @@ namespace WpfKb.Controls
         private TextBlock _keyText;
         private Brush _keySurfaceBorderBrush;
         private Brush _keySurfaceBackground;
-
+        private Brush _keyTextBrush;
 
 
         private readonly GradientBrush _keySurfaceMouseOverBrush = new LinearGradientBrush(
@@ -147,7 +148,7 @@ namespace WpfKb.Controls
 
             _keySurfaceBorderBrush = _keySurface?.BorderBrush;
             _keySurfaceBackground = _keySurface?.Background;
-
+            _keyTextBrush = _keyText?.Foreground;
             _keyText?.SetBinding(TextBlock.TextProperty, new Binding("DisplayName") { Source = this.Key });
         }
 
@@ -295,7 +296,7 @@ namespace WpfKb.Controls
         {
             if ((Key is TogglingModifierKey || Key is InstantaneousModifierKey) && ((ModifierKeyBase)Key).IsInEffect) return;
             _keySurface.BorderBrush = _keySurfaceBorderBrush;
-            _keyText.Foreground = Brushes.White;
+            _keyText.Foreground = _keyTextBrush;
             if (!AreAnimationsEnabled || Key is TogglingModifierKey || Key is InstantaneousModifierKey)
             {
                 _mouseDownSurface.BeginAnimation(OpacityProperty, new DoubleAnimation(0, new Duration(TimeSpan.Zero)));
