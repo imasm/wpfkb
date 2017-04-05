@@ -46,12 +46,18 @@ namespace WpfKb.Controls
 
 
 
-        private readonly GradientBrush _keySurfaceMouseOverBrush = new LinearGradientBrush(
-            new GradientStopCollection
-                {
-                    new GradientStop(Color.FromRgb(0x78, 0x78, 0x78), 0),
-                    new GradientStop(Color.FromRgb(0x78, 0x78, 0x78), 0.6),
-                    new GradientStop(Color.FromRgb(0x50, 0x50, 0x50), 1)
+        private readonly GradientBrush _keySurfaceMouseOverBrush = new LinearGradientBrush(
+
+            new GradientStopCollection
+
+                {
+
+                    new GradientStop(Color.FromRgb(0x78, 0x78, 0x78), 0),
+
+                    new GradientStop(Color.FromRgb(0x78, 0x78, 0x78), 0.6),
+
+                    new GradientStop(Color.FromRgb(0x50, 0x50, 0x50), 1)
+
                 }, 90);
 
         public ILogicalKey Key

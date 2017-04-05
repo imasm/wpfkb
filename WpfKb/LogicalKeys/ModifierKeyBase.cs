@@ -1,4 +1,4 @@
-﻿using WindowsInput;
+﻿using WpfKb.Input;
 
 namespace WpfKb.LogicalKeys
 {

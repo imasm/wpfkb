@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WindowsInput;
+using WpfKb.Input;
 
 namespace WpfKb.LogicalKeys
 {

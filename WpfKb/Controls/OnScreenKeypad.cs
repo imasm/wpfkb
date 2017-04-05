@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
-using WindowsInput;
+using WpfKb.Input;
 using WpfKb.LogicalKeys;
+
 
 namespace WpfKb.Controls
 {
