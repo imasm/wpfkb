@@ -110,3 +110,4 @@ Visual Studio*/
 UpgradeLog*.XML
 tools/
 output/*
+/.vs
