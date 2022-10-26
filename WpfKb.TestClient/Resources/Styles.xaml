@@ -1,7 +1,5 @@
-﻿<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    >
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="Border.Rounded.Floating" TargetType="Border">
         <Setter Property="Background" Value="#EEFFFFFF" />
@@ -11,14 +9,12 @@
         <Setter Property="Margin" Value="10" />
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect
-                    Color="Black"
-                    Opacity="1"
-                    />
+                <DropShadowEffect Opacity="1"
+                                  Color="Black" />
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <Style x:Key="TextBox.Rounded" TargetType="TextBox">
         <Setter Property="FontFamily" Value="Arial" />
         <Setter Property="FontSize" Value="24" />
@@ -29,41 +25,35 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate
-                    TargetType="{x:Type TextBox}"
-                    x:Name="MainControlTemplate"
-                    >
-                    <Border
-                        x:Name="Border"
-                        Margin="5"
-                        Padding="2"
-                        CornerRadius="2"
-                        BorderThickness="0"
-                        BorderBrush="#FFCCCCCC"
-                        Background="#FFDCDCDC"
-                        SnapsToDevicePixels="True"
-                        >
+                <ControlTemplate x:Name="MainControlTemplate"
+                                 TargetType="{x:Type TextBox}">
+                    <Border x:Name="Border"
+                            Margin="5"
+                            Padding="2"
+                            Background="#FFDCDCDC"
+                            BorderBrush="#FFCCCCCC"
+                            BorderThickness="0"
+                            CornerRadius="2"
+                            SnapsToDevicePixels="True">
                         <Grid>
-                            <ScrollViewer 
-                                x:Name="PART_ContentHost" 
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Left"
-                                Margin="0"
-                                />
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                          Margin="0"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Center" />
                         </Grid>
                         <Border.Effect>
-                            <DropShadowEffect
-                                x:Name="BorderShadow"
-                                RenderingBias="Performance"
-                                ShadowDepth="0"
-                                BlurRadius="10"
-                                Color="#FFCCCCCC"
-                                />
+                            <DropShadowEffect x:Name="BorderShadow"
+                                              BlurRadius="10"
+                                              RenderingBias="Performance"
+                                              ShadowDepth="0"
+                                              Color="#FFCCCCCC" />
                         </Border.Effect>
                     </Border>
                     <ControlTemplate.Resources>
-                        <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#FF999999" />
-                        <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#FFCCCCCC" />
+                        <SolidColorBrush x:Key="DisabledBackgroundBrush"
+                                         Color="#FF999999" />
+                        <SolidColorBrush x:Key="DisabledForegroundBrush"
+                                         Color="#FFCCCCCC" />
                     </ControlTemplate.Resources>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
@@ -74,12 +64,10 @@
                             <EventTrigger.Actions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ColorAnimation
-                                            Storyboard.TargetName="BorderShadow"
-                                            Storyboard.TargetProperty="Color"
-                                            To="Red"
-                                            Duration="0:0:0.2"
-                                            />
+                                        <ColorAnimation Storyboard.TargetName="BorderShadow"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="Red"
+                                                        Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger.Actions>
@@ -88,12 +76,10 @@
                             <EventTrigger.Actions>
                                 <BeginStoryboard>
                                     <Storyboard>
-                                        <ColorAnimation
-                                            Storyboard.TargetName="BorderShadow"
-                                            Storyboard.TargetProperty="Color"
-                                            To="#FFCCCCCC"
-                                            Duration="0:0:0.2"
-                                            />
+                                        <ColorAnimation Storyboard.TargetName="BorderShadow"
+                                                        Storyboard.TargetProperty="Color"
+                                                        To="#FFCCCCCC"
+                                                        Duration="0:0:0.2" />
                                     </Storyboard>
                                 </BeginStoryboard>
                             </EventTrigger.Actions>

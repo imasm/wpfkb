@@ -1,143 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0784CDC9-0F52-4B8B-9488-6589C11E94E2}</ProjectGuid>
-    <OutputType>library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WpfKb</RootNamespace>
-    <AssemblyName>WpfKb</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <TargetFrameworkProfile />
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+	<Authors>michaelnoonan, imasmitja</Authors>
+    <Title>WpfKb</Title>
+	<AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>$(AssemblyVersion)</FileVersion>
+    <Version>$(AssemblyVersion)</Version>
+    <Description>An on-screen or touch screen keyboard control and toolkit for WPF.</Description>
+    <PackageProjectUrl>https://github.com/imasm/wpfkb</PackageProjectUrl>
+    <Copyright>Copyright ©  2017 Ivan Masmitjà; Copyright ©  2009 - 2010 michaelnoonan</Copyright>
+    <PackageId>IMasm.$(AssemblyName)</PackageId>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/imasm/wpfkb</RepositoryUrl>
+    <PackageTags>WPF;keyboard</PackageTags>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
-    <NoWarn>1591</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>
-    </DocumentationFile>
-    <NoWarn>1591</NoWarn>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="UIAutomationProvider">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="PresentationCore">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="PresentationFramework">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Behaviors\AutoHideBehavior.cs" />
-    <Compile Include="Controls\FloatingTouchScreenKeyboard.xaml.cs">
-      <DependentUpon>FloatingTouchScreenKeyboard.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\OnScreenKeyEventArgs.cs" />
-    <Compile Include="Input\Native\HARDWAREINPUT.cs" />
-    <Compile Include="Input\Native\INPUT.cs" />
-    <Compile Include="Input\InputSimulator.cs" />
-    <Compile Include="Input\Native\KEYBDINPUT.cs" />
-    <Compile Include="Input\Native\MOUSEINPUT.cs" />
-    <Compile Include="Input\Native\MOUSEKEYBDHARDWAREINPUT.cs" />
-    <Compile Include="Input\VirtualKeyCode.cs" />
-    <Compile Include="LogicalKeys\CaseSensitiveKey.cs" />
-    <Compile Include="LogicalKeys\ChordKey.cs" />
-    <Compile Include="LogicalKeys\EmptyKey.cs" />
-    <Compile Include="LogicalKeys\ILogicalKey.cs" />
-    <Compile Include="LogicalKeys\InstantaneousModifierKey.cs" />
-    <Compile Include="LogicalKeys\LogicalKeyBase.cs" />
-    <Compile Include="LogicalKeys\ModifierKeyBase.cs" />
-    <Compile Include="LogicalKeys\MultiCharacterKey.cs" />
-    <Compile Include="LogicalKeys\NumLockSensitiveKey.cs" />
-    <Compile Include="LogicalKeys\ShiftSensitiveKey.cs" />
-    <Compile Include="LogicalKeys\StringKey.cs" />
-    <Compile Include="LogicalKeys\TogglingModifierKey.cs" />
-    <Compile Include="LogicalKeys\VirtualKey.cs" />
-    <Compile Include="Controls\OnScreenKey.cs" />
-    <Compile Include="Controls\OnScreenKeyboard.cs" />
-    <Compile Include="Controls\OnScreenKeyboardSection.cs" />
-    <Compile Include="Controls\OnScreenKeypad.cs" />
-    <Compile Include="Controls\OnScreenWebKeyboard.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Controls\UniformOnScreenKeyboard.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
-    <AppDesigner Include="Properties\" />
   </ItemGroup>
+
   <ItemGroup>
-    <Page Include="Controls\FloatingTouchScreenKeyboard.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\OnScreenKeyoard.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
-      <Version>1.1.39</Version>
-    </PackageReference>
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
